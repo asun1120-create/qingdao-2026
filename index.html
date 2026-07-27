@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>青島親子旅遊 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&family=Noto+Sans+TC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sea:#1B4F72;--sea-mid:#2874A6;--sea-light:#D6EAF8;
+  --sand-deep:#E8C98A;--ink:#1A1A2E;--muted:#6B7280;--foam:#F0F7FF;
+  --amber:#D97706;--amber-pale:#FEF3C7;
+  --green:#065F46;--red:#991B1B;--red-pale:#FEE2E2;
+  --purple:#6B21A8;--purple-pale:#F5F3FF;
+  --rule:#CBD5E1;--card:#FFF;--gray:#4B5563;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:#F8FAFC;color:var(--ink);font-family:'Noto Sans TC',sans-serif;font-size:15px;line-height:1.7;}
+
+/* COVER */
+.cover{background:linear-gradient(160deg,#0D3B5E 0%,#1B6CA8 55%,#1E8BBF 100%);padding:44px 24px 56px;position:relative;overflow:hidden;text-align:center;}
+.cover::before{content:'';position:absolute;bottom:-1px;left:0;right:0;height:56px;background:#F8FAFC;clip-path:ellipse(55% 100% at 50% 100%);}
+.cover-wave{position:absolute;bottom:28px;left:0;right:0;height:70px;background:rgba(255,255,255,.05);clip-path:ellipse(60% 100% at 50% 100%);}
+.cover-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.3em;color:rgba(255,255,255,.45);text-transform:uppercase;display:block;margin-bottom:12px;}
+.cover-title{font-family:'Noto Serif TC',serif;font-size:42px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:6px;}
+.cover-title span{color:var(--sand-deep);}
+.cover-sub{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:22px;letter-spacing:.05em;}
+.cover-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;}
+.cover-tag{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:4px 13px;font-size:11px;color:rgba(255,255,255,.8);font-family:'Space Mono',monospace;}
+
+/* NAV */
+.tab-nav{position:sticky;top:0;z-index:200;background:var(--sea);box-shadow:0 2px 8px rgba(0,0,0,.18);}
+.tab-nav-inner{display:flex;overflow-x:auto;scrollbar-width:none;padding:0 6px;}
+.tab-nav-inner::-webkit-scrollbar{display:none;}
+.tab-btn{flex-shrink:0;background:none;border:none;padding:13px 14px;font-family:'Noto Sans TC',sans-serif;font-size:12px;font-weight:500;color:rgba(255,255,255,.4);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.tab-btn.active{color:#fff;border-bottom-color:var(--sand-deep);}
+
+.section{display:none;}.section.active{display:block;}
+.sec-head{padding:22px 16px 14px;}
+.sec-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.25em;color:var(--sea-mid);text-transform:uppercase;display:block;margin-bottom:3px;}
+.sec-title{font-family:'Noto Serif TC',serif;font-size:22px;font-weight:700;}
+
+/* DAY CARDS */
+.day-card{margin:0 12px 12px;background:var(--card);border-radius:16px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07);border:1px solid var(--rule);}
+.day-head{padding:15px;display:flex;align-items:flex-start;gap:13px;cursor:pointer;user-select:none;-webkit-user-select:none;}
+.day-badge{flex-shrink:0;width:46px;height:46px;background:linear-gradient(135deg,var(--sea),var(--sea-mid));border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.day-badge-num{font-family:'Noto Serif TC',serif;font-size:19px;font-weight:700;color:#fff;line-height:1;}
+.day-badge-label{font-size:8px;color:rgba(255,255,255,.55);}
+.day-info{flex:1;min-width:0;}
+.day-date{font-family:'Space Mono',monospace;font-size:9px;color:var(--sea-mid);letter-spacing:.1em;display:block;margin-bottom:2px;}
+.day-name{font-family:'Noto Serif TC',serif;font-size:14px;font-weight:700;line-height:1.35;margin-bottom:2px;}
+.day-hotel{font-size:11px;color:var(--muted);}
+.chevron{flex-shrink:0;font-size:12px;color:var(--rule);margin-top:6px;transition:transform .25s;}
+.day-card.open .chevron{transform:rotate(180deg);}
+.day-body{display:none;}
+.day-card.open .day-body{display:block;}
+
+/* VIBE + ROUTE BAR */
+.vibe-bar{margin:0 16px 10px;background:var(--foam);border-left:3px solid var(--sea-mid);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:var(--sea);line-height:1.65;font-style:italic;}
+
+.route-bar{margin:0 16px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(90deg,var(--sea) 0%,var(--sea-mid) 100%);border-radius:10px;padding:10px 14px;}
+.route-bar-text{font-size:11px;color:rgba(255,255,255,.85);flex:1;}
+.route-bar-text b{color:#fff;display:block;font-size:12px;margin-bottom:2px;}
+.route-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:20px;padding:6px 12px;font-size:11px;font-weight:700;text-decoration:none;cursor:pointer;white-space:nowrap;}
+
+/* SECTION DIVIDER */
+.day-sec{margin:12px 16px 6px;display:flex;align-items:center;gap:8px;}
+.day-sec-line{flex:1;height:1px;background:var(--rule);}
+.day-sec-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.15em;color:var(--muted);text-transform:uppercase;white-space:nowrap;}
+
+/* TRANSPORT ROW */
+.transport{margin:0 16px 0;background:#F8FAFC;border:1px dashed var(--rule);border-radius:8px;padding:7px 12px;display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.transport-icon{font-size:14px;flex-shrink:0;}
+.transport-text{font-size:11px;color:var(--muted);line-height:1.5;}
+.transport-text b{color:var(--ink);}
+
+/* SPOT CARDS */
+.spot{margin:0 16px 8px;border-radius:12px;overflow:hidden;border:1px solid var(--rule);background:#fff;}
+.spot.highlight{border-color:var(--amber);background:#FFFBEB;}
+.spot-body{padding:12px 14px 10px;}
+.spot-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:4px;}
+.spot-left{flex:1;min-width:0;}
+.spot-name{font-size:14px;font-weight:700;color:var(--ink);line-height:1.35;margin-bottom:2px;}
+.spot-meta{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);line-height:1.6;margin-bottom:4px;}
+.spot-desc{font-size:12px;color:var(--gray);line-height:1.7;}
+.map-btn{flex-shrink:0;display:inline-flex;align-items:center;gap:3px;background:var(--sea);color:#fff;border:none;border-radius:16px;padding:6px 11px;font-size:10px;font-weight:700;text-decoration:none;white-space:nowrap;margin-top:2px;}
+
+/* TAGS */
+.tag{display:inline-block;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:4px;margin:0 3px 4px 0;}
+.tag-must{background:#FEE2E2;color:#991B1B;}
+.tag-ticket{background:#FEE2E2;color:#991B1B;font-weight:700;}
+.tag-free{background:#D1FAE5;color:#065F46;}
+.tag-walk{background:#E0E7FF;color:#3730A3;}
+.tag-metro{background:#F3E8FF;color:var(--purple);}
+.tag-early{background:#FEF3C7;color:#92400E;font-weight:700;}
+
+/* INFO BOXES */
+.eat-box{margin:8px 0 2px;background:var(--amber-pale);border-radius:8px;padding:10px 12px;font-size:12px;color:#78350F;line-height:1.7;}
+.eat-title{font-weight:700;font-size:11px;color:#92400E;display:block;margin-bottom:3px;}
+.buy-box{margin:8px 0 2px;background:var(--purple-pale);border-radius:8px;padding:10px 12px;font-size:12px;color:#4C1D95;line-height:1.7;}
+.buy-title{font-weight:700;font-size:11px;color:var(--purple);display:block;margin-bottom:3px;}
+.ticket-box{margin:8px 0 2px;background:var(--red-pale);border-radius:8px;padding:10px 12px;font-size:12px;color:#7F1D1D;line-height:1.7;}
+.ticket-title{font-weight:700;font-size:11px;color:var(--red);display:block;margin-bottom:3px;}
+.tip-box{margin:8px 16px 12px;background:#FFF7ED;border-left:3px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:#78350F;line-height:1.7;}
+.warn-box{margin:8px 16px 12px;background:var(--red-pale);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:10px 14px;font-size:12px;color:var(--red);line-height:1.7;}
+
+/* NOTE */
+.note-wrap{margin:0 16px 16px;padding-top:12px;border-top:1px dashed var(--rule);}
+.note-lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--sea-mid);text-transform:uppercase;display:block;margin-bottom:5px;}
+textarea.note{width:100%;min-height:58px;background:#F8FAFC;border:1px solid var(--rule);border-radius:8px;padding:10px 12px;font-family:'Noto Sans TC',sans-serif;font-size:13px;color:var(--ink);line-height:1.65;resize:vertical;outline:none;transition:border-color .2s;}
+textarea.note:focus{border-color:var(--sea-mid);}
+textarea.note::placeholder{color:#CBD5E1;}
+.note-status{font-family:'Space Mono',monospace;font-size:9px;color:var(--green);display:block;min-height:14px;margin-top:3px;}
+
+/* INFO CARDS */
+.list-wrap{padding:10px 12px 24px;}
+.info-card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:10px;box-shadow:0 1px 5px rgba(0,0,0,.07);border:1px solid var(--rule);}
+.info-card-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;color:var(--sea-mid);text-transform:uppercase;display:block;margin-bottom:3px;}
+.info-card-name{font-family:'Noto Serif TC',serif;font-size:16px;font-weight:700;margin-bottom:2px;}
+.info-card-sub{font-size:11px;color:var(--muted);margin-bottom:7px;}
+.info-card-desc{font-size:12px;color:var(--gray);line-height:1.7;}
+
+/* CHECKLIST */
+.cl-wrap{padding:8px 12px 28px;}
+.cl-group{margin-bottom:18px;}
+.cl-group-title{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;color:var(--sea-mid);text-transform:uppercase;display:block;padding:0 4px 8px;border-bottom:1px solid var(--rule);margin-bottom:2px;}
+.cl-item{display:flex;align-items:flex-start;gap:11px;padding:9px 4px;border-bottom:1px solid #F1F5F9;cursor:pointer;}
+.cl-item:last-child{border-bottom:none;}
+.cl-box{width:22px;height:22px;flex-shrink:0;margin-top:1px;border:1.5px solid var(--rule);border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent;transition:all .15s;}
+.cl-item.done .cl-box{background:var(--green);border-color:var(--green);color:#fff;}
+.cl-text{flex:1;font-size:13px;line-height:1.55;}
+.cl-item.done .cl-text{text-decoration:line-through;opacity:.45;}
+.cl-sub{font-size:11px;color:var(--muted);display:block;margin-top:2px;}
+
+/* TIPS */
+.tips-grid{padding:8px 12px 28px;}
+.tips-card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:10px;box-shadow:0 1px 5px rgba(0,0,0,.07);border:1px solid var(--rule);}
+.tips-card-title{font-weight:700;font-size:14px;margin-bottom:9px;}
+.tips-item{font-size:12px;color:#374151;line-height:1.75;padding:5px 0;border-bottom:1px solid #F1F5F9;display:flex;gap:8px;}
+.tips-item:last-child{border-bottom:none;}
+.tips-dot{color:var(--sea-mid);flex-shrink:0;font-weight:700;}
+
+footer{background:var(--sea);color:rgba(255,255,255,.3);text-align:center;padding:28px 20px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;line-height:2.5;}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="cover-wave"></div>
+  <span class="cover-eyebrow">Family Trip · August 2026</span>
+  <h1 class="cover-title">青島<span>親子遊</span></h1>
+  <p class="cover-sub">山東省 · 黃海之濱 · 8天7夜</p>
+  <div class="cover-tags">
+    <div class="cover-tag">8/2 — 8/9</div>
+    <div class="cover-tag">大人5 · 孩子5</div>
+    <div class="cover-tag">滴滴出行</div>
+    <div class="cover-tag">蘭歐國際飯店</div>
+  </div>
+</div>
+
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="switchTab('itinerary',this)">🗓 行程</button>
+    <button class="tab-btn" onclick="switchTab('hotels',this)">🏨 住宿</button>
+    <button class="tab-btn" onclick="switchTab('tickets',this)">🎟 預購票</button>
+    <button class="tab-btn" onclick="switchTab('food',this)">🍜 美食</button>
+    <button class="tab-btn" onclick="switchTab('tips',this)">💡 攻略</button>
+    <button class="tab-btn" onclick="switchTab('checklist',this)">✅ 清單</button>
+  </div>
+</nav>
+
+<!-- ══ 行程 ══ -->
+<div class="section active" id="sec-itinerary">
+<div class="sec-head"><span class="sec-label">Day by Day</span><h2 class="sec-title">八日行程</h2></div>
+
+<!-- DAY 1 -->
+<div class="day-card" id="d1">
+  <div class="day-head" onclick="toggleDay('d1')">
+    <div class="day-badge"><div class="day-badge-num">1</div><div class="day-badge-label">DAY</div></div>
+    <div class="day-info">
+      <span class="day-date">8月2日 · 週六</span>
+      <div class="day-name">✈️ 出發！青島，我們來了</div>
+      <div class="day-hotel">🏨 希岸Deluxe酒店（機場附近）</div>
+    </div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="day-body">
+    <div class="vibe-bar">從桃園機場出發的那一刻，五個大人、五個孩子，帶著行李和期待，正式踏上青島之旅的第一步。</div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">出發</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <div class="spot-name">✈️ 桃園機場出發</div>
+            <div class="spot-meta">11:00 出發 · 16:45 起飛 · 19:15 抵達青島</div>
+          </div>
+        </div>
+        <div class="spot-desc">建議提前2.5–3小時到機場。10人行李多，預留充裕時間。</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>膠東機場 → 希岸酒店</b>　滴滴2台（建議商務車）　約15分鐘</div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <div class="spot-name">🏨 入住希岸Deluxe酒店</div>
+            <div class="spot-meta">約 20:30 抵達 · 今晚純休息</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3743,36.3613&name=青島膠東國際機場" target="_blank" rel="noopener">📍 機場</a>
+        </div>
+        <div class="spot-desc">今晚不安排行程，好好休息，明天才是真正的開始！</div>
+        <div class="eat-box"><span class="eat-title">🍜 宵夜</span>飯店附近隨便找，試試青島鍋貼或海鮮麵，第一頓青島味！</div>
+      </div>
+    </div>
+    <div class="tip-box"><b>⚠️ 入境提醒：</b>台胞證正本帶好，海關走藍色通道。支付寶、微信出發前在台灣測試能否付款。進中國後記得開 VPN。</div>
+    <div class="note-wrap"><span class="note-lbl">✏️ 備註</span><textarea class="note" placeholder="航班號、座位安排…" oninput="saveNote('n-d1',this)" id="n-d1"></textarea><span class="note-status" id="ns-d1"></span></div>
+  </div>
+</div>
+
+<!-- DAY 2 -->
+<div class="day-card" id="d2">
+  <div class="day-head" onclick="toggleDay('d2')">
+    <div class="day-badge"><div class="day-badge-num">2</div><div class="day-badge-label">DAY</div></div>
+    <div class="day-info">
+      <span class="day-date">8月3日 · 週日</span>
+      <div class="day-name">🍺 金沙灘啤酒節！</div>
+      <div class="day-hotel">🏨 全季飯店（金沙灘黃島區）</div>
+    </div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="day-body">
+    <div class="vibe-bar">整趟旅程最熱血的開場——全球規模最大的啤酒嘉年華，大人開懷暢飲，孩子吃美食看表演，整個晚上都是狂歡。</div>
+    <div class="route-bar">
+      <div class="route-bar-text"><b>📍 今日路線</b>希岸酒店 → 全季飯店 → 金沙灘啤酒城</div>
+      <a class="route-btn" href="https://uri.amap.com/navigation?from=120.3743,36.3613,青島膠東機場&to=120.1667,35.9833,金沙灘啤酒城&mode=car&policy=0" target="_blank" rel="noopener">🗺️ 查看路線</a>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>希岸酒店 → 全季飯店</b>　滴滴2台　約20分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">下午 16:00</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-must">🌟 重點</span>
+            <div class="spot-name">🍺 金沙灘啤酒城</div>
+            <div class="spot-meta">第36屆青島國際啤酒節（7/17–8/15）· 建議16:00入場</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.1667,35.9833&name=金沙灘啤酒城" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">9個大篷、2300款啤酒，每晚1500架無人機表演＋海上焰火秀！大人暢飲，孩子有特飲和美食攤。建議16:00入場——天氣稍涼、位置好搶。</div>
+        <div class="ticket-box"><span class="ticket-title">🎟 購票</span>關注「青島國際啤酒節」官方微博查最新門票資訊。⚠️ 帶現金備用，人多信號差！</div>
+        <div class="eat-box"><span class="eat-title">🦞 啤酒節必吃</span>海鮮生鮮大篷：自選鮮活海產現場加工，比「688元海鮮大咖」透明多了！</div>
+      </div>
+    </div>
+    <div class="warn-box">⚠️ <b>防坑：</b>「688元海鮮大咖」花蛤+小鮑魚+幾隻蝦+豆芽，成本不到50元，能不點就不點！</div>
+    <div class="tip-box"><b>螢光手環必帶！</b>5個孩子每人戴不同顏色，人潮中走散一眼找到。帶摺疊扇，晚上仍悶熱。現金備用，掃碼可能失敗。</div>
+    <div class="note-wrap"><span class="note-lbl">✏️ 備註</span><textarea class="note" placeholder="啤酒節集合時間、帳篷號碼…" oninput="saveNote('n-d2',this)" id="n-d2"></textarea><span class="note-status" id="ns-d2"></span></div>
+  </div>
+</div>
+
+<!-- DAY 3 -->
+<div class="day-card" id="d3">
+  <div class="day-head" onclick="toggleDay('d3')">
+    <div class="day-badge"><div class="day-badge-num">3</div><div class="day-badge-label">DAY</div></div>
+    <div class="day-info">
+      <span class="day-date">8月4日 · 週一</span>
+      <div class="day-name">🍺 啤酒博物館 + 台東 + 燈光秀</div>
+      <div class="day-hotel">🏨 蘭歐國際飯店（五四廣場）入住</div>
+    </div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="day-body">
+    <div class="vibe-bar">從西海岸移往市區，正式在蘭歐飯店紮根。下午走進百年啤酒廠房；晚上台東夜市燈光和香氣；最後在奧帆中心，等待那一場讓所有人屏息的燈光秀。</div>
+    <div class="route-bar">
+      <div class="route-bar-text"><b>📍 今日路線</b>全季飯店 → 蘭歐飯店 → 啤酒博物館 → 台東 → 奧帆中心</div>
+      <a class="route-btn" href="https://uri.amap.com/marker?position=120.3833,36.0786&name=青島啤酒博物館" target="_blank" rel="noopener">🗺️ 景點地圖</a>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>全季飯店 → 蘭歐國際飯店</b>　滴滴2台（跨區行李多，建議商務車）　約50分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">下午 14:00</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-ticket">🎟 需預購</span>
+            <div class="spot-name">🏭 青島啤酒博物館</div>
+            <div class="spot-meta">成人¥60 · 兒童半價 · 140cm以下免費 · 約2小時</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3833,36.0786&name=青島啤酒博物館" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">百年老廠房，德式紅磚建築。A館看歷史，B館看生產線，出口品嚐現打原漿生啤。</div>
+        <div class="ticket-box"><span class="ticket-title">🎟 購票</span>提前2-3天美團App搜尋「青島啤酒博物館」購票。非大陸籍帶台胞證正本入場。</div>
+        <div class="eat-box"><span class="eat-title">🍺 館內必體驗</span>中途酒吧：原漿啤酒（最新鮮）<br>孩子：無酒精飲品＋啤酒豆（博物館限定，可買來當伴手禮）</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>啤酒博物館 → 台東步行街</b>　滴滴　約10分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">傍晚 17:00</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">免費</span>
+            <div class="spot-name">🛍️ 台東步行街</div>
+            <div class="spot-meta">青島最熱鬧的商業步行街</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3917,36.0850&name=台東步行街" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="buy-box"><span class="buy-title">🛒 台東踩點必試</span>凱雪冰淇淋（老字號薄荷口味，¥10）<br>糖球/糖葫蘆（¥5-10，孩子搶著吃）<br>崂山可樂（孩子必試，¥5）</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>台東 → 奧帆中心情人壩</b>　滴滴　約15分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">夜晚 19:30</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-must">🌟 重點</span>
+            <div class="spot-name">✨ 浮山灣燈光秀 · 情人壩</div>
+            <div class="spot-meta">19:30 & 20:30 各一場 · 免費</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3928,36.0613&name=奧帆中心情人壩" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">53棟高樓外牆同步亮燈，全球最長濱海曲面屏幕。提前15分鐘到情人壩走到堤壩盡頭，隨手一拍都是大片！</div>
+      </div>
+    </div>
+    <div class="note-wrap"><span class="note-lbl">✏️ 備註</span><textarea class="note" placeholder="博物館訂票確認碼、燈光秀集合點…" oninput="saveNote('n-d3',this)" id="n-d3"></textarea><span class="note-status" id="ns-d3"></span></div>
+  </div>
+</div>
+
+<!-- DAY 4 -->
+<div class="day-card" id="d4">
+  <div class="day-head" onclick="toggleDay('d4')">
+    <div class="day-badge"><div class="day-badge-num">4</div><div class="day-badge-label">DAY</div></div>
+    <div class="day-info">
+      <span class="day-date">8月5日 · 週二</span>
+      <div class="day-name">🏛️ 棧橋 · 教堂 · 團島午餐 · 信號山 · 小魚山 · 中山路夜遊</div>
+      <div class="day-hotel">🏨 蘭歐國際飯店</div>
+    </div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="day-body">
+    <div class="vibe-bar">青島的靈魂所在。百年棧橋、哥德教堂、最道地的海鮮市場午餐、登高俯瞰老城、沿海漫步——最後在中山路夜燈下漫步收尾。</div>
+    <div class="route-bar">
+      <div class="route-bar-text"><b>📍 今日路線</b>棧橋 → 教堂 → 團島 → 信號山 → 小魚山 → 琴嶼路 → 中山路（全程步行為主）</div>
+      <a class="route-btn" href="https://uri.amap.com/navigation?from=120.3147,36.0579,棧橋&to=120.3210,36.0750,中山路&mode=walk&waypoints=120.3178,36.0710,聖彌爾教堂;120.3050,36.0620,團島農貿市場;120.3165,36.0753,信號山;120.3243,36.0611,小魚山" target="_blank" rel="noopener">🗺️ 查看路線</a>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>蘭歐飯店 → 棧橋</b>　滴滴　約15分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">上午 10:00</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">免費</span>
+            <div class="spot-name">🌊 棧橋 · 回瀾閣</div>
+            <div class="spot-meta">約1小時 · 礁石區濕滑注意防滑鞋</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3147,36.0579&name=棧橋" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">百年地標，走到橋頭的迴瀾閣，左邊老城紅瓦、右邊無邊大海。旺季人多，快速打卡拍照即可。</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚶</div><div class="transport-text"><b>棧橋 → 聖彌爾教堂</b>　步行　約15分鐘（平路）</div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">外拍免費</span>
+            <div class="spot-name">⛪ 聖彌爾大教堂</div>
+            <div class="spot-meta">外拍免費 · 入內¥10 · 約30分鐘</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3178,36.0710&name=聖彌爾大教堂" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">56公尺高哥德式雙塔，青島最具代表性歐式地標。上午光線最好出片，外拍打卡為主。</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚶</div><div class="transport-text"><b>聖彌爾 → 團島農貿市場</b>　步行　約10分鐘（平路）</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">中午 11:30 — 午餐</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-must">🌟 特色</span>
+            <div class="spot-name">🦞 團島農貿市場 + 現場加工午餐</div>
+            <div class="spot-meta">地下一層海鮮區 · 全程約1.5-2小時</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3050,36.0620&name=團島農貿市場" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">最道地的青島玩法！地下一層挑活海鮮，出門走幾步找貼價格表的啤酒屋，交給老闆指定烹調，坐下等15分鐘就開吃。</div>
+        <div class="eat-box"><span class="eat-title">🦞 推薦選購</span>梭子蟹、皮皮蝦、蛤蜊、生蠔、對蝦<br>加工費：清蒸約¥5-10/份，辣炒約¥15-20/份<br>進去先問清楚再坐，現金備好！</div>
+        <div class="warn-box" style="margin:8px 0 0">⚠️ 10人份量大，海鮮費約¥800-1000，加工費約¥100-150，進門前確認計價方式</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚶</div><div class="transport-text"><b>團島市場 → 信號山</b>　步行（有坡度）　約20分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">下午 14:00</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-ticket">🎟 ¥20</span>
+            <div class="spot-name">⛰️ 信號山公園</div>
+            <div class="spot-meta">海拔98米 · 登頂10-15分鐘 · 約1.5小時</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3165,36.0753&name=信號山公園" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">旋轉觀景台360度俯瞰老城，紅瓦綠樹碧海藍天全收眼底，是青島最經典的一幕。門票¥20現場購。</div>
+        <div class="warn-box" style="margin:8px 0 0">⚠️ <b>台灣人實測：</b>入園有時需微信掃碼，台胞證號碼可能無法使用，遇困難請門口人員協助。</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚶</div><div class="transport-text"><b>信號山 → 小魚山</b>　步行　約15分鐘（平路）</div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">免費</span>
+            <div class="spot-name">🐟 小魚山公園</div>
+            <div class="spot-meta">海拔60米 · 5分鐘登頂 · 約45分鐘</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3243,36.0611&name=小魚山公園" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">同時俯瞰第一海水浴場、八大關、棧橋，層次感超豐富，5分鐘就能到頂。</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚶</div><div class="transport-text"><b>小魚山 → 琴嶼路</b>　步行　約10分鐘（下坡）</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">傍晚 16:30</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">免費</span>
+            <div class="spot-name">🌊 琴嶼路海岸漫步</div>
+            <div class="spot-meta">約1小時 · 吹海風發呆</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3210,36.0586&name=琴嶼路" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">沿海邊木棧道漫步，黑礁石配藍海，傍晚最美的一段路。</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚶</div><div class="transport-text"><b>琴嶼路 → 中山路</b>　步行　約10分鐘（平路）</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">晚上 18:30 — 中山路夜遊</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">免費</span>
+            <div class="spot-name">🌙 中山路夜遊</div>
+            <div class="spot-meta">百年老商業街 · 夜晚燈光最美</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3210,36.0750&name=中山路" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">霓虹燈亮起，老建築換上新裝，街邊小吃攤飄香，是整天最輕鬆的收尾。</div>
+        <div class="eat-box"><span class="eat-title">🍢 中山路夜市必試</span>無名炸串（本地人推薦，土豆片外脆裡粉，¥17）<br>宏發紅西餅屋（油炸麵包，沒早市吃到的這裡補）<br>林記小籠包（天主教堂旁，現蒸現賣）</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>中山路 → 蘭歐飯店</b>　滴滴　約15分鐘</div></div>
+    <div class="tip-box"><b>💡 老城提醒：</b>教堂附近打車困難，提前叫滴滴。地勢起伏穿舒適運動鞋，今天走很多！</div>
+    <div class="note-wrap"><span class="note-lbl">✏️ 備註</span><textarea class="note" placeholder="想拍的角度、孩子最喜歡哪個景點…" oninput="saveNote('n-d4',this)" id="n-d4"></textarea><span class="note-status" id="ns-d4"></span></div>
+  </div>
+</div>
+
+<!-- DAY 5 -->
+<div class="day-card" id="d5">
+  <div class="day-head" onclick="toggleDay('d5')">
+    <div class="day-badge"><div class="day-badge-num">5</div><div class="day-badge-label">DAY</div></div>
+    <div class="day-info">
+      <span class="day-date">8月6日 · 週三</span>
+      <div class="day-name">🌅 海泊河早市 · 八大關 · 第二海水浴場 · 上街里啤酒節</div>
+      <div class="day-hotel">🏨 蘭歐國際飯店</div>
+    </div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="day-body">
+    <div class="vibe-bar">從清晨的早市煙火氣開始，走進歐洲風情的萬國別墅區，脫鞋踏沙戲水，晚上漫步百年老城喝啤酒看街頭表演——今天是最有層次的一天。</div>
+    <div class="route-bar">
+      <div class="route-bar-text"><b>📍 今日路線</b>海泊河早市 → 八大關 → 第二海水浴場 → 上街里</div>
+      <a class="route-btn" href="https://uri.amap.com/navigation?from=120.3700,36.0900,海泊河早市&to=120.3210,36.0840,上街里&mode=car&waypoints=120.3460,36.0597,八大關;120.3527,36.0560,第二海水浴場" target="_blank" rel="noopener">🗺️ 查看路線</a>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>蘭歐飯店 → 海泊河早市</b>　滴滴　約20分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">清晨 07:00 — 早市</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-early">⏰ 早市</span>
+            <div class="spot-name">🥟 海泊河早市（交運康定路早市）</div>
+            <div class="spot-meta">06:00–12:00營業 · 07:00到最理想 · 約2小時</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3700,36.0900&name=海泊河早市" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="eat-box"><span class="eat-title">🥟 必吃清單</span>眾品老方子鍋貼＋甜沫（延吉路111號，大蝦鍋貼必點）<br>大卯大包（¥18，包子超大香氣撲鼻）<br>宏發紅西餅屋（油炸麵包，¥15）<br>凱雪冰淇淋（老字號，清晨就開）</div>
+        <div class="warn-box" style="margin:8px 0 0">⚠️ 現金為主，備小額（¥5-10）。人多孩子牽緊。多數攤位沒菜單，看到直接問價。</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>海泊河早市 → 八大關</b>　滴滴　約15分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">上午 10:00</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">免費入園</span>
+            <div class="spot-name">🏰 八大關風景區</div>
+            <div class="spot-meta">花石樓¥8.5 · 公主樓¥20 · 外拍免費最值得</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3460,36.0597&name=八大關風景區" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">德日俄英法各國風格別墅，樹蔭把整條路都遮住，夏天超涼快。花石樓是打卡重點，隨手一拍都是電影感。</div>
+        <div class="eat-box"><span class="eat-title">🥟 八大關午餐</span>開海·紅島海鮮蝦水餃（八大關店）：每日新鮮紅島鮮蝦水餃。<br>⚠️ 提前大眾點評訂位，告知10人用餐！</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚶</div><div class="transport-text"><b>八大關 → 第二海水浴場</b>　步行　約10分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">下午 14:30</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">免費</span>
+            <div class="spot-name">🏖️ 第二海水浴場 + 太平角公園</div>
+            <div class="spot-meta">沙細人少 · 水淺浪小 · 親子玩水最佳</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3527,36.0560&name=第二海水浴場" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">孩子撿貝殼堆沙堡，太平角公園就在旁邊，傍晚看日落超美。帶換洗衣物、防水拖鞋、防曬乳。</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>第二海水浴場 → 上街里老城會場</b>　滴滴　約15分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">晚上 19:00 — 上街里啤酒節</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">免費入場</span>
+            <span class="tag tag-must">🌟 特色</span>
+            <div class="spot-name">🍺 上街里老城啤酒節會場</div>
+            <div class="spot-meta">第36屆啤酒節老城會場 · 7/17–8/15</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3210,36.0840&name=中山路上街里" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">無圍牆全開放！中山路為主軸，NPC街頭巡遊、沉浸式演出、百年里院燈光，邊走邊喝感受老城夏夜。</div>
+        <div class="eat-box"><span class="eat-title">🍺 ¥9.9暢飲計劃</span>現場購買¥9.9一杯精釀，手持啤酒漫步百年老城，大人孩子都有得逛！</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>上街里 → 蘭歐飯店</b>　滴滴　約15分鐘</div></div>
+    <div class="note-wrap"><span class="note-lbl">✏️ 備註</span><textarea class="note" placeholder="水餃館訂位確認、泳衣泳褲帶了嗎…" oninput="saveNote('n-d5',this)" id="n-d5"></textarea><span class="note-status" id="ns-d5"></span></div>
+  </div>
+</div>
+
+<!-- DAY 6 -->
+<div class="day-card" id="d6">
+  <div class="day-head" onclick="toggleDay('d6')">
+    <div class="day-badge"><div class="day-badge-num">6</div><div class="day-badge-label">DAY</div></div>
+    <div class="day-info">
+      <span class="day-date">8月7日 · 週四</span>
+      <div class="day-name">🐋 極地海洋公園 + 小麥島日落 + 飯店附近散步</div>
+      <div class="day-hotel">🏨 蘭歐國際飯店</div>
+    </div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="day-body">
+    <div class="vibe-bar">孩子最期待的一天。走進極地海洋公園——白鯨、企鵝、人鯊共舞——最後在小麥島礁石上，看著日落把整片大海染成金色。</div>
+    <div class="route-bar">
+      <div class="route-bar-text"><b>📍 今日路線</b>極地海洋公園 → 小麥島 → 蘭歐飯店</div>
+      <a class="route-btn" href="https://uri.amap.com/navigation?from=120.4724,36.0687,極地海洋公園&to=120.4378,36.0649,小麥島公園&mode=car" target="_blank" rel="noopener">🗺️ 查看路線</a>
+    </div>
+    <div class="transport"><div class="transport-icon">🚇</div><div class="transport-text"><b>蘭歐飯店 → 極地海洋公園</b>　地鐵2號線至海遊路站B口步行約5分鐘，或滴滴約25分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">上午 10:00</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-ticket">🎟 需預購</span>
+            <div class="spot-name">🐋 青島極地海洋公園</div>
+            <div class="spot-meta">成人¥220 · 兒童¥140 · 1.2m以下免費 · 建議3-4小時</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.4724,36.0687&name=青島極地海洋公園" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">白鯨、企鵝、海豹、北極熊！展館採單向動線，一路走到底不用回頭。</div>
+        <div class="ticket-box"><span class="ticket-title">🎟 購票方式</span>提前1-3天美團App搜尋「青島極地海洋公園」購票。<br>⚠️ 暑假旺季現場票可能售罄！出發前確認表演時間。</div>
+        <div class="eat-box"><span class="eat-title">🐠 館內必看</span>海洋劇場（人鯊共舞＋美人魚）<br>白鯨館（孩子最愛）<br>極地冰雪區（企鵝＋冷氣，避暑神器）</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>極地海洋公園 → 小麥島</b>　滴滴　約20分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">傍晚 17:30 — 壓軸</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-must">🌟 壓軸</span>
+            <span class="tag tag-free">免費</span>
+            <div class="spot-name">🌅 小麥島公園 · 日落</div>
+            <div class="spot-meta">17:30 入島 · 日落約19:00</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.4378,36.0649&name=小麥島公園" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">青島最美野生海岸線。礁石、草坪、木棧道，傍晚光線將大海染成橘金色。帶好防滑鞋，礁石濕滑。</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>小麥島 → 蘭歐飯店</b>　滴滴　約25分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">晚上 — 飯店附近輕鬆散步</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <div class="spot-name">🏬 萬象城周邊閒逛</div>
+            <div class="spot-meta">蘭歐飯店步行5分鐘 · 今天走很多，輕鬆收尾</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3893,36.0628&name=青島萬象城" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">萬象城逛逛吃個甜點。出發前確認鋼彈展覽是否還在（查萬象城官方微博）。</div>
+      </div>
+    </div>
+    <div class="note-wrap"><span class="note-lbl">✏️ 備註</span><textarea class="note" placeholder="水族館訂票號碼、孩子最喜歡的動物…" oninput="saveNote('n-d6',this)" id="n-d6"></textarea><span class="note-status" id="ns-d6"></span></div>
+  </div>
+</div>
+
+<!-- DAY 7 -->
+<div class="day-card" id="d7">
+  <div class="day-head" onclick="toggleDay('d7')">
+    <div class="day-badge"><div class="day-badge-num">7</div><div class="day-badge-label">DAY</div></div>
+    <div class="day-info">
+      <span class="day-date">8月8日 · 週五</span>
+      <div class="day-name">🏬 萬象城 · 即墨古城 · 李村夜市</div>
+      <div class="day-hotel">🏨 蘭歐國際飯店</div>
+    </div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="day-body">
+    <div class="vibe-bar">上午讓孩子在萬象城放電，下午搭地鐵去千年古城，傍晚在青石板路上邊走邊吃，晚上李村夜市掃尾——青島最後一個完整的白天。</div>
+    <div class="route-bar">
+      <div class="route-bar-text"><b>📍 今日路線</b>萬象城 →（地鐵1號線）→ 即墨古城 →（地鐵同線）→ 李村夜市</div>
+      <a class="route-btn" href="https://uri.amap.com/navigation?from=120.3893,36.0628,萬象城&to=120.4350,36.1800,李村夜市&mode=transit&waypoints=120.4467,36.3900,即墨古城" target="_blank" rel="noopener">🗺️ 查看路線</a>
+    </div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">上午 10:00</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <div class="spot-name">🏬 青島萬象城</div>
+            <div class="spot-meta">蘭歐飯店步行5分鐘</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3893,36.0628&name=青島萬象城" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">室內滑冰場孩子最愛，大人喝咖啡購物。確認鋼彈展覽是否還在（查萬象城官方微博）。</div>
+        <div class="buy-box"><span class="buy-title">🎁 伴手禮最後掃貨</span>宜今興啤酒酥（若萬象城有門店）<br>其他伴手禮在台東超市買即可，不要留到機場（機場貴2-3倍）</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚇</div><div class="transport-text"><b>萬象城 → 即墨古城</b>　地鐵1號線五四廣場站 → 終點東郭庄站 → 公車4222路至「即墨古城西門」　全程約1-1.5小時</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">下午 14:30</div><div class="day-sec-line"></div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">大門免費</span>
+            <div class="spot-name">🏯 即墨古城</div>
+            <div class="spot-meta">縣衙¥20 · 文廟¥20（可選）· 建議2-3小時</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.4467,36.3900&name=即墨古城" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">1400年歷史古城，大門免費。青石板路、古城牆、小吃街，孩子邊走邊吃完全不無聊。</div>
+        <div class="eat-box"><span class="eat-title">🍢 古城必吃</span>古城小吃街隨走隨吃：烤冷面、糖葫蘆、老北京鹵煮</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚇</div><div class="transport-text"><b>即墨古城 → 李村夜市</b>　地鐵1號線同線順路，東郭庄站坐到李村站B口出　約20分鐘</div></div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">晚上 19:00</div><div class="day-sec-line"></div></div>
+    <div class="spot highlight">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <span class="tag tag-free">免費</span>
+            <div class="spot-name">🌙 李村夜市</div>
+            <div class="spot-meta">地鐵1號線李村站B口出 · 19:00後最熱鬧</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.4350,36.1800&name=李村夜市" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">青島最大夜市，3條街串聯，小吃、日用品、玩具全都有，還有兒童娛樂區！</div>
+        <div class="eat-box"><span class="eat-title">🍢 李村必吃</span>肇東烤餅、泰式露楚、香辣烤豬蹄、灌漿臭豆腐</div>
+      </div>
+    </div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>李村夜市 → 蘭歐飯店</b>　滴滴　約30分鐘</div></div>
+    <div class="warn-box">⚠️ <b>回程提醒：</b>鮮海鮮不能上飛機！大紅腸、蛤蜊醬、鮁魚醬（罐裝）可托運。今晚把行李整理好！</div>
+    <div class="note-wrap"><span class="note-lbl">✏️ 備註</span><textarea class="note" placeholder="手信清單、誰要買什麼…" oninput="saveNote('n-d7',this)" id="n-d7"></textarea><span class="note-status" id="ns-d7"></span></div>
+  </div>
+</div>
+
+<!-- DAY 8 -->
+<div class="day-card" id="d8" style="margin-bottom:24px">
+  <div class="day-head" onclick="toggleDay('d8')">
+    <div class="day-badge"><div class="day-badge-num">8</div><div class="day-badge-label">DAY</div></div>
+    <div class="day-info">
+      <span class="day-date">8月9日 · 週六</span>
+      <div class="day-name">✈️ 再見青島，平安回家</div>
+      <div class="day-hotel">🏠 返台灣</div>
+    </div>
+    <div class="chevron">▼</div>
+  </div>
+  <div class="day-body">
+    <div class="vibe-bar">帶著滿滿的海味、啤酒香、孩子笑聲和那片閃耀的燈光，踏上歸途。青島，後會有期。🌊</div>
+    <div class="day-sec"><div class="day-sec-line"></div><div class="day-sec-label">09:30 出發</div><div class="day-sec-line"></div></div>
+    <div class="transport"><div class="transport-icon">🚕</div><div class="transport-text"><b>蘭歐飯店 → 青島膠東國際機場</b>　滴滴2台（10人行李多）　約40-50分鐘　⚠️ 國際航班建議提前3小時到機場</div></div>
+    <div class="spot">
+      <div class="spot-body">
+        <div class="spot-top">
+          <div class="spot-left">
+            <div class="spot-name">🛫 青島膠東國際機場</div>
+          </div>
+          <a class="map-btn" href="https://uri.amap.com/marker?position=120.3743,36.3613&name=青島膠東國際機場" target="_blank" rel="noopener">📍 導航</a>
+        </div>
+        <div class="spot-desc">機場有青島啤酒、崂山茶可補購，但比市區貴2-3倍。前一天已買好就直接過安檢出發。</div>
+      </div>
+    </div>
+    <div class="note-wrap"><span class="note-lbl">✏️ 備註</span><textarea class="note" placeholder="航班時間、行李重量確認…" oninput="saveNote('n-d8',this)" id="n-d8"></textarea><span class="note-status" id="ns-d8"></span></div>
+  </div>
+</div>
+</div>
+
+<!-- ══ 住宿 ══ -->
+<div class="section" id="sec-hotels">
+<div class="sec-head"><span class="sec-label">Accommodation</span><h2 class="sec-title">住宿安排</h2></div>
+<div class="list-wrap">
+  <div class="info-card">
+    <span class="info-card-label">Day 1 · 8/2 — 1晚</span>
+    <div class="info-card-name">青島希岸Deluxe酒店</div>
+    <div class="info-card-sub">📍 膠東國際機場附近</div>
+    <div class="info-card-desc">緊鄰機場，深夜抵達不趕路。以休息為主，確認可容納10人。</div>
+    <div style="margin-top:8px"><a class="map-btn" href="https://uri.amap.com/marker?position=120.3750,36.3600&name=希岸Deluxe酒店" target="_blank" rel="noopener">📍 導航</a></div>
+  </div>
+  <div class="info-card">
+    <span class="info-card-label">Day 2 · 8/3 — 1晚</span>
+    <div class="info-card-name">全季飯店（金沙灘黃島區政府店）</div>
+    <div class="info-card-sub">📍 西海岸金沙灘，啤酒節主場附近</div>
+    <div class="info-card-desc">啤酒節盡興後不用舟車勞頓，確認可容納10人或訂鄰近兩間房。</div>
+    <div style="margin-top:8px"><a class="map-btn" href="https://uri.amap.com/marker?position=120.1800,35.9800&name=全季飯店金沙灘" target="_blank" rel="noopener">📍 導航</a></div>
+  </div>
+  <div class="info-card">
+    <span class="info-card-label">Days 3–8 · 8/4–8/9 — 5晚</span>
+    <div class="info-card-name">蘭歐國際飯店</div>
+    <div class="info-card-sub">📍 五四廣場附近，萬象城旁</div>
+    <div class="info-card-desc">本次旅行主要基地。奧帆中心燈光秀、五四廣場、萬象城全在步行圈內。告知前台行李寄存時間。</div>
+    <div style="margin-top:8px"><a class="map-btn" href="https://uri.amap.com/marker?position=120.3900,36.0620&name=蘭歐國際飯店" target="_blank" rel="noopener">📍 導航</a></div>
+  </div>
+</div>
+</div>
+
+<!-- ══ 預購票 ══ -->
+<div class="section" id="sec-tickets">
+<div class="sec-head"><span class="sec-label">Pre-book</span><h2 class="sec-title">提前預購票清單</h2></div>
+<div class="list-wrap">
+  <div class="info-card" style="border-left:4px solid var(--red)">
+    <span class="info-card-label" style="color:var(--red)">🎟 Day 3 · 8/4 — 提前2-3天</span>
+    <div class="info-card-name">青島啤酒博物館</div>
+    <div class="info-card-sub">成人¥60 · 兒童半價 · 140cm以下免費</div>
+    <div class="info-card-desc">暑期人潮多，非大陸籍帶台胞證正本入場。<br>📲 美團App 搜尋「青島啤酒博物館」購票</div>
+  </div>
+  <div class="info-card" style="border-left:4px solid var(--red)">
+    <span class="info-card-label" style="color:var(--red)">🎟 Day 6 · 8/7 — 提前1-3天</span>
+    <div class="info-card-name">青島極地海洋公園</div>
+    <div class="info-card-sub">成人¥220 · 兒童¥140 · 1.2m以下免費</div>
+    <div class="info-card-desc">暑假旺季現場票可能售罄，出發前確認表演時間。<br>📲 美團App 搜尋「青島極地海洋公園」購票</div>
+  </div>
+  <div class="info-card" style="border-left:4px solid var(--amber)">
+    <span class="info-card-label" style="color:var(--amber)">📅 Day 2 · 8/3</span>
+    <div class="info-card-name">青島國際啤酒節（西海岸主場）</div>
+    <div class="info-card-sub">第36屆 · 7/17–8/15</div>
+    <div class="info-card-desc">⚠️ 帶現金備用！人多信號差，掃碼可能失敗。<br>📲 關注「青島國際啤酒節」官方微博查門票資訊</div>
+  </div>
+  <div class="info-card" style="border-left:4px solid var(--green)">
+    <span class="info-card-label" style="color:var(--green)">📝 訂位 · Day 5午餐</span>
+    <div class="info-card-name">開海·紅島海鮮蝦水餃（八大關店）</div>
+    <div class="info-card-sub">建議提前1-2天訂位</div>
+    <div class="info-card-desc">暑期人氣很高，大眾點評搜尋「開海紅島蝦水餃八大關」訂位，告知10人用餐。</div>
+  </div>
+</div>
+</div>
+
+<!-- ══ 美食 ══ -->
+<div class="section" id="sec-food">
+<div class="sec-head"><span class="sec-label">Food Map</span><h2 class="sec-title">青島美食地圖</h2></div>
+<div class="list-wrap">
+  <div class="info-card" style="border-left:4px solid var(--amber)">
+    <span class="info-card-label" style="color:var(--amber)">🥟 早市 — Day 5 清晨</span>
+    <div class="info-card-name">海泊河早市必吃</div>
+    <div class="info-card-desc">眾品老方子鍋貼＋甜沫（延吉路111號）<br>大卯大包（¥18）· 宏發紅西餅屋（¥15）· 凱雪冰淇淋（¥10）</div>
+  </div>
+  <div class="info-card" style="border-left:4px solid var(--sea-mid)">
+    <span class="info-card-label" style="color:var(--sea-mid)">🦞 海鮮餐廳推薦</span>
+    <div class="info-card-name">本地人強力推薦</div>
+    <div class="info-card-desc">🌟 <b>等俺船靠岸</b>（五四廣場，五樓海景，海腸撈飯必點）<br>🌟 <b>33號大院</b>（棧橋旁，青島本幫菜，¥60/人）<br>🌟 <b>雙合園水餃</b>（老字號，鮁魚水餃、海膽水餃）<br>🌟 <b>船歌魚水餃</b>（必吃榜，各種海鮮水餃）<br>🌟 <b>老船長海鮮麵</b>（五四廣場附近，¥30）</div>
+  </div>
+  <div class="info-card" style="border-left:4px solid var(--green)">
+    <span class="info-card-label" style="color:var(--green)">🥤 青島代表飲品</span>
+    <div class="info-card-name">全程必試</div>
+    <div class="info-card-desc">崂山可樂 · 崂山白花蛇草水 · 崂山蘇打水<br>原漿啤酒（博物館最新鮮）· 青島老酸奶<br>青世家奶啤（粉紅罐）· 一抹崂山綠（奶茶）</div>
+  </div>
+  <div class="info-card" style="border-left:4px solid var(--purple)">
+    <span class="info-card-label" style="color:var(--purple)">🎁 伴手禮清單</span>
+    <div class="info-card-name">帶回台灣必買</div>
+    <div class="info-card-desc">🥩 青島大紅腸（真空包）<br>🍺 青島啤酒禮盒（博物館限定）<br>🧆 啤酒豆（博物館限定）<br>🍪 宜今興啤酒酥<br>🫙 即食蛤蜊醬（拌飯神器）<br>🐟 鮁魚醬（罐裝可托運）<br>🧆 王哥莊花饃<br>🍵 崂山綠茶/紅茶（送長輩）<br>🍖 脂渣零食（鵬程脂渣）<br>🥤 崂山可樂（幾罐帶回嚐鮮）<br><br>⚠️ 鮮海鮮不能上飛機，罐裝/真空包裝需托運</div>
+  </div>
+  <div class="info-card" style="border-left:4px solid var(--red)">
+    <span class="info-card-label" style="color:var(--red)">⚠️ 踩雷警告</span>
+    <div class="info-card-name">這些千萬別點</div>
+    <div class="info-card-desc">❌ 啤酒節「688元海鮮大咖」：成本不到50元<br>❌ 不明碼標價的海鮮攤：進門前先問計價方式<br>❌ 機場餐廳：價格是市區2-3倍</div>
+  </div>
+</div>
+</div>
+
+<!-- ══ 攻略 ══ -->
+<div class="section" id="sec-tips">
+<div class="sec-head"><span class="sec-label">Local Tips</span><h2 class="sec-title">旅遊小攻略</h2></div>
+<div class="tips-grid">
+  <div class="tips-card">
+    <div class="tips-card-title">💳 支付 & 現金</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>微信支付、支付寶為主，出發前在台灣測試能否付款</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>備好小額現金（¥5、¥10、¥20），早市和小攤必用</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>啤酒節人多信號差，現金備用絕對必要</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>滴滴可綁台灣信用卡，出發前設定好並測試</div>
+  </div>
+  <div class="tips-card">
+    <div class="tips-card-title">📱 必裝 App</div>
+    <div class="tips-item"><span class="tips-dot">▸</span><b>微信</b>：通訊+支付，綁台灣信用卡</div>
+    <div class="tips-item"><span class="tips-dot">▸</span><b>支付寶</b>：景點掃碼+支付備用</div>
+    <div class="tips-item"><span class="tips-dot">▸</span><b>滴滴出行</b>：叫車必備，台灣號碼直接用</div>
+    <div class="tips-item"><span class="tips-dot">▸</span><b>高德地圖</b>：中國境內最準，提前下載離線地圖</div>
+    <div class="tips-item"><span class="tips-dot">▸</span><b>美團</b>：景點購票、餐廳訂位</div>
+    <div class="tips-item"><span class="tips-dot">▸</span><b>大眾點評</b>：查餐廳評價、訂位</div>
+    <div class="tips-item"><span class="tips-dot">▸</span><b>VPN</b>：進中國後Google、Line無法使用，台灣先下載好</div>
+  </div>
+  <div class="tips-card">
+    <div class="tips-card-title">🌡️ 天氣 & 穿著</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>8月均溫26-28°C，濕熱但有海風</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>雨季偶有陣雨，帶輕便雨衣或折疊傘</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>防曬乳SPF50+每人每天補擦</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>日落約19:00-20:00，晚上海邊有涼風，薄外套備著</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>老城區地勢起伏，舒適運動鞋必備</div>
+  </div>
+  <div class="tips-card">
+    <div class="tips-card-title">🚗 交通總覽</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>景點間主要靠滴滴，10人建議叫2台或商務車</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>棧橋、教堂附近打車困難，提前叫好滴滴</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>極地海洋公園：地鐵2號線海遊路站更方便</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>即墨古城：地鐵1號線東郭庄站轉公車4222路</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>李村夜市：地鐵1號線李村站B口，即墨古城同線順路</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>燈光秀、啤酒節散場後大家同時叫車，提前15分鐘叫好</div>
+  </div>
+  <div class="tips-card">
+    <div class="tips-card-title">👶 孩子相關</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>螢光手環！每個孩子戴不同顏色，啤酒節防走散必備</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>每個孩子口袋放小紙條，寫上家長手機號碼</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>帶摺疊風扇、防曬帽、防水拖鞋、泳衣泳褲</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>常備藥：退燒、止瀉、暈車藥、皮膚過敏藥</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>燈光秀19:30和20:30各一場，帶零食讓孩子有耐心等</div>
+  </div>
+  <div class="tips-card">
+    <div class="tips-card-title">🛡️ 風控 & 緊急</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>全員購買旅遊保險（含醫療、行李遺失、班機延誤）</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>台胞證和換洗衣物分開放，不要全放同一個人行李箱</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>所有大人加入微信群組，確認聯絡方式</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>重要資訊截圖備份（台胞證、機票、飯店確認信）</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>中國急救：120　報警：110</div>
+    <div class="tips-item"><span class="tips-dot">▸</span>青島大學附屬醫院（蘭歐飯店約10分鐘）</div>
+  </div>
+</div>
+</div>
+
+<!-- ══ 清單 ══ -->
+<div class="section" id="sec-checklist">
+<div class="sec-head"><span class="sec-label">Pre-departure</span><h2 class="sec-title">出發前清單</h2></div>
+<div class="cl-wrap">
+  <div class="cl-group">
+    <span class="cl-group-title">🎫 證件 & 訂票</span>
+    <div class="cl-item" onclick="toggleCheck(this,'c1')"><div class="cl-box">✓</div><div class="cl-text">台胞證全員有效期確認<span class="cl-sub">建議至少6個月以上</span></div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c2')"><div class="cl-box">✓</div><div class="cl-text">機票確認（去回程）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c3')"><div class="cl-box">✓</div><div class="cl-text">所有飯店預訂確認信截圖</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c4')"><div class="cl-box">✓</div><div class="cl-text">全員購買旅遊保險</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c5')"><div class="cl-box">✓</div><div class="cl-text">青島啤酒博物館門票<span class="cl-sub">Day 3 · 提前2-3天 · 美團購票</span></div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c6')"><div class="cl-box">✓</div><div class="cl-text">極地海洋公園門票<span class="cl-sub">Day 6 · 提前1-3天 · 成人¥220 兒童¥140</span></div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c7')"><div class="cl-box">✓</div><div class="cl-text">啤酒節門票資訊確認<span class="cl-sub">關注「青島國際啤酒節」官方微博</span></div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c8')"><div class="cl-box">✓</div><div class="cl-text">開海蝦水餃館訂位（Day 5午餐）<span class="cl-sub">大眾點評，告知10人用餐</span></div></div>
+  </div>
+  <div class="cl-group">
+    <span class="cl-group-title">📱 App & 支付</span>
+    <div class="cl-item" onclick="toggleCheck(this,'c9')"><div class="cl-box">✓</div><div class="cl-text">微信安裝 + 綁定台灣信用卡<span class="cl-sub">測試小額付款是否成功</span></div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c10')"><div class="cl-box">✓</div><div class="cl-text">支付寶安裝 + 綁定支付方式</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c11')"><div class="cl-box">✓</div><div class="cl-text">滴滴出行 App 安裝 + 信用卡綁定測試</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c12')"><div class="cl-box">✓</div><div class="cl-text">高德地圖 App + 下載青島離線地圖</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c13')"><div class="cl-box">✓</div><div class="cl-text">美團 App 安裝</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c14')"><div class="cl-box">✓</div><div class="cl-text">大眾點評 App 安裝</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c15')"><div class="cl-box">✓</div><div class="cl-text">VPN 在台灣先下載好<span class="cl-sub">進中國後Google、Line無法使用</span></div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c16')"><div class="cl-box">✓</div><div class="cl-text">所有大人加入微信緊急聯絡群</div></div>
+  </div>
+  <div class="cl-group">
+    <span class="cl-group-title">🎒 必帶物品</span>
+    <div class="cl-item" onclick="toggleCheck(this,'c17')"><div class="cl-box">✓</div><div class="cl-text">螢光手環（每個孩子不同顏色）<span class="cl-sub">啤酒節人潮防走散必備</span></div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c18')"><div class="cl-box">✓</div><div class="cl-text">孩子口袋小紙條（家長手機號碼）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c19')"><div class="cl-box">✓</div><div class="cl-text">防曬乳 SPF50+（每人每天補擦）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c20')"><div class="cl-box">✓</div><div class="cl-text">防水防滑拖鞋（礁石區必備）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c21')"><div class="cl-box">✓</div><div class="cl-text">泳衣泳褲（第二海水浴場）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c22')"><div class="cl-box">✓</div><div class="cl-text">常備藥（退燒、止瀉、暈車、過敏）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c23')"><div class="cl-box">✓</div><div class="cl-text">摺疊風扇</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c24')"><div class="cl-box">✓</div><div class="cl-text">防曬帽 / 輕薄遮陽傘</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c25')"><div class="cl-box">✓</div><div class="cl-text">輕便雨衣或折疊傘</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c26')"><div class="cl-box">✓</div><div class="cl-text">小額人民幣現金（¥5、¥10、¥20）</div></div>
+  </div>
+  <div class="cl-group">
+    <span class="cl-group-title">🎁 回程手信</span>
+    <div class="cl-item" onclick="toggleCheck(this,'c27')"><div class="cl-box">✓</div><div class="cl-text">青島大紅腸（真空包）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c28')"><div class="cl-box">✓</div><div class="cl-text">青島啤酒禮盒（博物館限定）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c29')"><div class="cl-box">✓</div><div class="cl-text">啤酒豆（博物館限定）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c30')"><div class="cl-box">✓</div><div class="cl-text">宜今興啤酒酥</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c31')"><div class="cl-box">✓</div><div class="cl-text">即食蛤蜊醬</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c32')"><div class="cl-box">✓</div><div class="cl-text">鮁魚醬（罐裝可托運）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c33')"><div class="cl-box">✓</div><div class="cl-text">王哥莊花饃</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c34')"><div class="cl-box">✓</div><div class="cl-text">崂山綠茶 / 紅茶</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c35')"><div class="cl-box">✓</div><div class="cl-text">脂渣零食（鵬程脂渣）</div></div>
+    <div class="cl-item" onclick="toggleCheck(this,'c36')"><div class="cl-box">✓</div><div class="cl-text">崂山可樂（幾罐帶回嚐鮮）</div></div>
+  </div>
+</div>
+</div>
+
+<footer>
+  青島親子旅遊 · 2026年8月2日—9日<br>
+  大人5 · 孩子5 · 備註儲存於本機瀏覽器<br>
+  📍 所有導航連結點擊後在新分頁開啟，不影響行程頁面<br>
+  💡 加入主畫面可像App一樣使用，離線也能看
+</footer>
+
+<script>
+function switchTab(id,btn){
+  document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('sec-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleDay(id){document.getElementById(id).classList.toggle('open');}
+var st={};
+function saveNote(key,el){
+  try{localStorage.setItem(key,el.value);}catch(e){}
+  var s=document.getElementById('ns-'+key.replace('n-',''));
+  if(!s)return;
+  s.textContent='';
+  clearTimeout(st[key]);
+  st[key]=setTimeout(function(){
+    s.textContent='✓ 已儲存';
+    setTimeout(function(){s.textContent='';},2000);
+  },600);
+}
+function toggleCheck(el,key){
+  el.classList.toggle('done');
+  try{localStorage.setItem('cl-'+key,el.classList.contains('done')?'1':'0');}catch(e){}
+}
+window.addEventListener('DOMContentLoaded',function(){
+  ['d1','d2','d3','d4','d5','d6','d7','d8'].forEach(function(d){
+    try{var v=localStorage.getItem('n-'+d);if(v){var e=document.getElementById('n-'+d);if(e)e.value=v;}}catch(e){}
+  });
+  for(var i=1;i<=36;i++){
+    try{
+      if(localStorage.getItem('cl-c'+i)==='1'){
+        document.querySelectorAll('.cl-item').forEach(function(item){
+          if(item.getAttribute('onclick')&&item.getAttribute('onclick').indexOf("'c"+i+"'")>-1){
+            item.classList.add('done');
+          }
+        });
+      }
+    }catch(e){}
+  }
+});
+</script>
+</body>
+</html>
